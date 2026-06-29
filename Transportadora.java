@@ -1,12 +1,14 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Transportadora {
+public class Transportadora implements Serializable {
     String nome;
     String cnpj;
     int id;
     HashMap<Fornecedor, ArrayList<Produto>> produtosTransp = new HashMap<>();
-    
+    ArrayList<Pedido>transportes = new ArrayList<>();
+
     public String getNome() {
         return nome;
     }
@@ -31,6 +33,14 @@ public class Transportadora {
 
     
 
+    public ArrayList<Pedido> getTransportes() {
+        return transportes;
+    }
+
+    public void setTransportes(ArrayList<Pedido> transportes) {
+        this.transportes = transportes;
+    }
+
     public int getId() {
         return id;
     }
@@ -44,6 +54,13 @@ public class Transportadora {
         this.nome = nome;
         this.cnpj = cnpj;
         this.produtosTransp = produtosTransp;
+    }
+
+    public Transportadora(int id, String nome, String cnpj, ArrayList<Pedido>transportes) {
+        this.id = id;
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.transportes = transportes;
     }
 
     public void acrescentarRota(Fornecedor forn, int idProduto){
@@ -84,6 +101,13 @@ public class Transportadora {
         }
     }
     
+    public void exibirDadosPedidos(){
+
+        for(int i = 0; i < transportes.size(); i++){
+            System.out.println("Entrega n°" + i + " : ");
+            transportes.get(i).exibirRelatorio();
+        }
+    }
     
    
 

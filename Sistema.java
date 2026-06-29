@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -219,7 +220,7 @@ public class Sistema {
 
     }
 
-    public void cadastrarProdutos(ArrayList<Produto>produtos){
+    public void cadastrarProdutos(ArrayList<Produto>produtos, Lojaestoque estoque){
         System.out.println("----------------------------");
         System.out.println("Criacao de novo produto");
         System.out.println("Digite o nome do produto: ");
@@ -230,6 +231,9 @@ public class Sistema {
         System.out.println("Digite o ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
+        System.out.println("Digite a quantidade de estoque do produto: ");
+        int qnt = scanner.nextInt();
+        scanner.nextLine();
 
         int conferenciaId = conferirIdProd(produtos, id);
         
@@ -239,8 +243,10 @@ public class Sistema {
         }
         
 
-       Produto novProduto = new Produto(id, nome, valor);
+       Produto novProduto = new Produto(id, nome, valor,qnt);
+       Carrinhoitem novCarrinho = new Carrinhoitem(id, nome, valor,qnt);
        produtos.add(novProduto);
+       estoque.getEstoqueLoja().add(novCarrinho);
     }
     
     public void exibirProdutos(ArrayList<Produto>Prod){
@@ -248,14 +254,12 @@ public class Sistema {
         System.out.println("Produtos");
 
         for(int i = 0; i < Prod.size(); i++){
-            System.out.println("Nome: " + Prod.get(i).getNome());
-            System.out.println("Valor:  " + Prod.get(i).getValor());
-            System.out.println("Id: " + Prod.get(i).getId());
+            Prod.get(i).exibirInfoProd();
             System.out.println("----------------------------------------");
         }
     }
 
-    public ArrayList<Produto> alterarProdutos(ArrayList<Produto>prod){
+    public ArrayList<Produto> alterarProdutos(ArrayList<Produto>prod, Lojaestoque estoque){
         System.out.println("----------------------------");
         System.out.println("Alterar Dados Produtos");
         System.out.println("Digite a ID: ");
@@ -268,7 +272,7 @@ public class Sistema {
             if(idUsu == prod.get(i).getId()){
                 Idencontrado = true;
                 prod.remove(i);
-                cadastrarProdutos(prod);
+                cadastrarProdutos(prod,estoque);
                 break;
             }
         }
@@ -492,7 +496,7 @@ public class Sistema {
             System.out.println("Produto ou Fornecedor nao encontrado");
         } 
 
-        public void excluiProduto(ArrayList<Produto>prod){
+        public void excluiProduto(ArrayList<Produto>prod,ArrayList<Carrinhoitem>estoque){
             System.out.println("----------------------------");
             System.out.println("Excluir Produto");
             System.out.println("Digite o ID do produto: ");
@@ -503,6 +507,7 @@ public class Sistema {
 
                 if(idprod == prod.get(i).getId()){
                     prod.remove(i);
+                    estoque.remove(i);
                     System.out.println("Produto removido com sucesso !");
                     return;
                 }
@@ -566,6 +571,205 @@ public class Sistema {
             }
 
             System.out.println("Usuario nao encontrado");
+        }
+        
+       public float calculaValor(ArrayList<Carrinhoitem>itens){
+
+        float valorsoma = 0;
+
+        for(int i = 0; i < itens.size(); i++){
+           valorsoma += itens.get(i).valorTotal();
+        }
+
+        return valorsoma;
+       }
+
+       public void acrescentarRota( ArrayList<Usuario> Logins, ArrayList<Transportadora> listaTranportadoras){
+        System.out.println("----------------------------");
+        System.out.println("Acrescentar Rota De Entrega a Transportadora");
+        System.out.println("Digite o Id do usuario: ");
+        int idus = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Digite o Id da Transportadora");
+        int idTransp = scanner.nextInt();
+        scanner.nextLine();
+
+        for(int i = 0 ; i < Logins.size(); i++){
+            if(idus == Logins.get(i).getId()){
+                ArrayList<Pedido>pedidousuario = Logins.get(i).getPedidoPendente();
+                for(int j = 0; j < listaTranportadoras.size(); j++){
+                    if(idTransp == listaTranportadoras.get(j).getId()){
+                        listaTranportadoras.get(j).getTransportes().addAll(pedidousuario);
+                        Logins.get(i).getPedidoPendente().clear();
+                        System.out.println("Pedidos acrescentados com sucesso a Transportadora");
+                    }
+                }
+            }
+        }
+
+       }
+
+       public void exibirCargas( ArrayList<Transportadora> listaTranportadoras){
+         System.out.println("----------------------------");
+         System.out.println("Cargas Por Transportadoras: ");
+
+         for(int i = 0; i < listaTranportadoras.size(); i++){
+            System.out.println("--------------------");
+            System.out.println(listaTranportadoras.get(i).getNome() + " : ");
+            listaTranportadoras.get(i).exibirDadosPedidos();
+         }
+       }
+
+       public void reporMercadorias(ArrayList<Carrinhoitem>estoque, ArrayList<Produto>prod){
+        System.out.println("----------------------------");
+        System.out.println("Repor Mercadorias: ");
+        System.out.println("Digite o ID do produto que deseja Repor: ");
+        int idprod = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Digite a quantidade que deseja Repor: ");
+        int quantidadereposta = scanner.nextInt();
+        scanner.nextLine();
+
+        for(int i=0; i<estoque.size();i++){
+            if(idprod == estoque.get(i).getId()){
+                estoque.get(i).setQuantidade(quantidadereposta + estoque.get(i).getQuantidade());
+                prod.get(i).setQuantidade(quantidadereposta + prod.get(i).getQuantidade());
+                System.out.println("Quantidade Reposta com Sucesso!!");
+                return;
+            }
+        }
+
+        System.out.println("ID Invalido!!");
+       }
+
+        //OPERAÇÕES USUARIOS DE COMPRA//
+        
+        public void buscaritemporIdCompras(ArrayList<Carrinhoitem>estoque){
+            System.out.println("----------------------------");
+            System.out.println("Busca Por ID:");
+            System.out.println("Digite o ID: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            
+            for(int i = 0; i<estoque.size();i++){
+                if(estoque.get(i).getId() == id){
+                    estoque.get(i).exibirInfoProd();
+                }
+            }
+
+
+        }
+
+        public void buscarItemPorNome(ArrayList<Carrinhoitem>estoque){
+            System.out.println("----------------------------");
+            System.out.println("Busca Por nome:");
+            System.out.println("Digite o nome: ");
+            String nomeprod = scanner.nextLine();
+            
+            for(int i = 0; i<estoque.size();i++){
+                if(estoque.get(i).getNome().contains(nomeprod)){
+                    estoque.get(i).exibirInfoProd();
+                }
+            }
+
+        }
+
+        public void addprodCarrinho(Lojaestoque loja, Usuario usuario){
+            System.out.println("----------------------------");
+            System.out.println("Adicionar Item ao Carrinho");
+            System.out.println("Digite o id do item: ");
+            int iditem = scanner.nextInt();
+            scanner.nextLine();
+
+            for(int i = 0; i<loja.getEstoqueLoja().size();i++){
+                if(iditem == loja.getEstoqueLoja().get(i).getId()){
+                    System.out.println("Digite a quantidade a Comprar: ");
+                    int quantiadadeComprar = scanner.nextInt();
+                    scanner.nextLine();
+                    if(loja.validaRetiradaDoItem(quantiadadeComprar, iditem)){
+                        System.out.println("Item Adicionado Com sucesso no carrinho!");
+                        Carrinhoitem novoitem = new Carrinhoitem(loja.getEstoqueLoja().get(i).getId(), loja.getEstoqueLoja().get(i).getNome(), loja.getEstoqueLoja().get(i).getValor(), quantiadadeComprar);
+                        usuario.carrinho.add(novoitem);
+                        loja.deduzirQnt(quantiadadeComprar, iditem);
+                        return;
+                    }
+                    else{
+                        System.out.println("quantidade insuficiente!!");
+                        return;
+                    } 
+                }
+               
+            }
+            System.out.println("Item nao encontrado!!");
+            return;
+        }
+
+        public void mostrarTodosOsitens(Lojaestoque loja){
+            System.out.println("----------------------------");
+            System.out.println("Todos itens: ");
+            
+            for(int i = 0; i<loja.getEstoqueLoja().size();i++){
+                loja.getEstoqueLoja().get(i).exibirInfoProd();
+            }
+
+        }
+
+        public void excluirItemCarrinho(Lojaestoque estoque, Usuario usuario){
+            System.out.println("----------------------------");
+            System.out.println("Excluir item por posiçao: ");
+            System.out.println("digite a posicao que deseja excluir do carrinho: ");
+            int posicao = scanner.nextInt();
+            scanner.nextLine();
+
+            for(int i = 0; i < usuario.carrinho.size(); i++){
+                if(posicao == i+1){
+                    int quantidadeDevolvida = usuario.carrinho.get(i).getQuantidade();
+                    int idProdutoDevolvido = usuario.carrinho.get(i).getId();
+                    usuario.carrinho.remove(i);
+                    estoque.incrementarQnt(quantidadeDevolvida,idProdutoDevolvido);
+                    System.out.println("Produto Removido com sucesso!!");
+                    return;
+                }
+            }
+
+            System.out.println("Produto nao encontrado!!");
+            
+            
+        }
+
+
+        public void efetivarCompra(Usuario usuario){
+              System.out.println("----------------------------");
+              System.out.println("Efetivar Compra: ");
+              System.out.println("Valor Total da compra: " + usuario.valorTotalcarrinho());
+              System.out.println("Digite a data no formato DDMMAAAA: ");
+              int data = scanner.nextInt();
+              scanner.nextLine();
+              int dia = data / 1000000;
+              int mes = (data / 10000) % 100;
+              int ano = data % 10000;
+              try{
+                Data data1 = new Data(dia, mes, ano);
+
+                 System.out.println("digite a ID do pedido: ");
+              
+                 int idpedido = scanner.nextInt();
+                 scanner.nextLine();
+              
+                 Pedido pedidoP = new Pedido(usuario.nome, idpedido, 1, usuario.valorTotalcarrinho(), data1, usuario.getCarrinho() );
+
+                 usuario.pedidoPendente.add(pedidoP);
+
+                 pedidoP.exibirRelatorio();
+
+                 usuario.carrinho.clear();
+
+                 usuario.pedido.add(pedidoP);
+              }
+              catch(IllegalArgumentException e){
+                  System.out.println(e.getMessage());
+              }
+             
         }
 
 }

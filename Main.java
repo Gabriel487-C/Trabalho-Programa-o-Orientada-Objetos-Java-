@@ -1,42 +1,48 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         
         Sistema sistema = new Sistema();
 
+        
+
         Usuario a1 = new Usuario("Gabriel", "03629794050", 1, 1, "123");
         Usuario a2 = new Usuario("Guilherme", "03627894012", 2, 2, "124");
         Usuario a3 = new Usuario("Daniel", "03622794450", 3, 3, "321");
+        Usuario a4 = new Usuario("Roberto", "05822124450", 4, 4, "1a2");
+        Usuario a5 = new Usuario("Rogerio", "05822124679", 5, 4, "1a3");
+        
+        
 
         ArrayList<Usuario> Logins = new ArrayList<>();
         Logins.add(a1);
         Logins.add(a3);
         Logins.add(a2);
+        Logins.add(a4);
+        Logins.add(a5);
         
-        Produto p1 = new Produto(1, "carvao", 12);
-        Produto p2 = new Produto(2, "cafe", 32);
-        Produto p3 = new Produto(3, "suco", 24);
+        Produto p1 = new Produto(1, "Teclado Mecanico", 120.0f, 2);
+        Produto p2 = new Produto(2, "Mouse Gamer", 75.0f, 1);
+        Produto p3 = new Produto(3, "Monitor 24 Polegadas", 899.0f, 1);
 
-        Produto p4 = new Produto(4, "ferro", 5);
-        Produto p5 = new Produto(5, "chumbo", 6);
-        Produto p6 = new Produto(6, "aluminio", 12);
-        Produto p7 = new Produto(7, "vidro", 14);
+        Produto p4 = new Produto(4, "Headset USB", 150.0f, 3);
+        Produto p5 = new Produto(5, "Webcam Full HD", 220.0f, 1);
+        Produto p6 = new Produto(6, "SSD 1TB", 450.0f, 2);
+        Produto p7 = new Produto(7, "Memoria RAM 16GB", 280.0f, 4);
         
-        Produto p8 = new Produto(8, "cimento", 32);
-        Produto p9 = new Produto(9, "areia", 18);
-        Produto p10 = new Produto(10, "tinta branca", 45);
-        Produto p11 = new Produto(11, "massa corrida", 27);
-        Produto p12 = new Produto(12, "verniz", 38);
-        Produto p13 = new Produto(13, "selador", 22);
-        Produto p14 = new Produto(14, "pincel", 12);
-        Produto p15 = new Produto(15, "rolo de pintura", 19);
-        Produto p16 = new Produto(16, "thinner", 29);
-        Produto p17 = new Produto(17, "lixa", 6);
-
+        Produto p8 = new Produto(8, "Notebook Gamer", 4500.0f, 1);
+        Produto p9 = new Produto(9, "Processador Ryzen 7 7700X", 1899.0f, 2);
+        Produto p10 = new Produto(10, "Placa de Video RTX 4060", 2599.0f, 1);
+        Produto p11 = new Produto(11, "Fonte 750W 80 Plus Gold", 549.0f, 3);
+        Produto p12 = new Produto(12, "Gabinete Mid Tower", 399.0f, 2);
+        Produto p13 = new Produto(13, "Placa Mae B650", 1099.0f, 2);
+        Produto p14 = new Produto(14, "Cooler para Processador", 189.0f, 5);
+        Produto p15 = new Produto(15, "HD Externo 2TB", 429.0f, 4);
+        Produto p16 = new Produto(16, "Pendrive 128GB", 89.0f, 10);
+        Produto p17 = new Produto(17, "Roteador Wi-Fi 6", 499.0f, 3);
         
         ArrayList<Produto> produtos1 = new ArrayList<>();
         ArrayList<Produto> produtos2 = new ArrayList<>();
@@ -108,10 +114,74 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        ArrayList<Carrinhoitem> carrinho = new ArrayList<>();
+
+        carrinho.add(new Carrinhoitem(1, "Teclado Mecanico", 120.0f, 2));
+        carrinho.add(new Carrinhoitem(2, "Mouse Gamer", 75.0f, 1));
+        carrinho.add(new Carrinhoitem(3, "Monitor 24 Polegadas", 899.0f, 1));
+        carrinho.add(new Carrinhoitem(4, "Headset USB", 150.0f, 3));
+        carrinho.add(new Carrinhoitem(5, "Webcam Full HD", 220.0f, 1));
+        carrinho.add(new Carrinhoitem(6, "SSD 1TB", 450.0f, 2));
+        carrinho.add(new Carrinhoitem(7, "Memoria RAM 16GB", 280.0f, 4));
+        carrinho.add(new Carrinhoitem(8, "Notebook Gamer", 4500.0f, 1));
+        carrinho.add(new Carrinhoitem(9, "Processador Ryzen 7 7700X", 1899.0f, 2));
+        carrinho.add(new Carrinhoitem(10, "Placa de Video RTX 4060", 2599.0f, 1));
+        carrinho.add(new Carrinhoitem(11, "Fonte 750W 80 Plus Gold", 549.0f, 3));
+        carrinho.add(new Carrinhoitem(12, "Gabinete Mid Tower", 399.0f, 2));
+        carrinho.add(new Carrinhoitem(13, "Placa Mae B650", 1099.0f, 2));
+        carrinho.add(new Carrinhoitem(14, "Cooler para Processador", 189.0f, 5));
+        carrinho.add(new Carrinhoitem(15, "HD Externo 2TB", 429.0f, 4));
+        carrinho.add(new Carrinhoitem(16, "Pendrive 128GB", 89.0f, 10));
+        carrinho.add(new Carrinhoitem(17, "Roteador Wi-Fi 6", 499.0f, 3));
+        
+        ArrayList<Carrinhoitem> carrinho1 = new ArrayList<>();
+        ArrayList<Carrinhoitem> carrinho2 = new ArrayList<>();
+        
+
+        carrinho1.add(new Carrinhoitem(1, "Teclado Mecanico", 120.0f, 2));
+        carrinho1.add(new Carrinhoitem(2, "Mouse Gamer", 75.0f, 1));
+        carrinho1.add(new Carrinhoitem(3, "Monitor 24 Polegadas", 899.0f, 1));
+        carrinho1.add(new Carrinhoitem(4, "Headset USB", 150.0f, 3));
+        carrinho1.add(new Carrinhoitem(5, "Webcam Full HD", 220.0f, 1));
+        carrinho1.add(new Carrinhoitem(6, "SSD 1TB", 450.0f, 2));
+        
+        Data data1 = new Data(12, 12, 2024);
+        Data data2 = new Data(10, 11, 2024);
+
+        Pedido pedido1 = new Pedido("ped1", 15221, 0, sistema.calculaValor(carrinho1), data1, carrinho1);
+       
+        Logins.get(4).getPedido().add(pedido1);
+        Logins.get(4).getPedidoPendente().add(pedido1);
+        
+        carrinho2.add(new Carrinhoitem(7, "Memoria RAM 16GB", 280.0f, 4));
+        carrinho2.add(new Carrinhoitem(8, "Notebook Gamer", 4500.0f, 1));
+        carrinho2.add(new Carrinhoitem(9, "Processador Ryzen 7 7700X", 1899.0f, 2));
+        carrinho2.add(new Carrinhoitem(10, "Placa de Video RTX 4060", 2599.0f, 1));
+        carrinho2.add(new Carrinhoitem(11, "Fonte 750W 80 Plus Gold", 549.0f, 3));
+        carrinho2.add(new Carrinhoitem(12, "Gabinete Mid Tower", 399.0f, 2));
+        carrinho2.add(new Carrinhoitem(13, "Placa Mae B650", 1099.0f, 2));
+        carrinho2.add(new Carrinhoitem(14, "Cooler para Processador", 189.0f, 5));
+        carrinho2.add(new Carrinhoitem(15, "HD Externo 2TB", 429.0f, 4));
+
+        Pedido pedido2 = new Pedido("ped2", 15231, 0, sistema.calculaValor(carrinho2), data2, carrinho2);
+        
+        Logins.get(3).getPedido().add(pedido2);
+        Logins.get(3).getPedidoPendente().add(pedido2);
+
+        Lojaestoque estoque = new Lojaestoque(todosProdutos);
+
+       
+        estoque.setEstoqueLoja(CarregarItens.carregar("estoque.dat"));
+        Logins = CarregarItens.carregar("logins.dat");
+        listaTranportadoras = CarregarItens.carregar("transportadoras.dat");
+        listaFornecedores = CarregarItens.carregar("fornecedores.dat");
+        todosProdutos = CarregarItens.carregar("produtos.dat");
+        
         System.out.println("---------------------------");
         System.out.println("Sistema E-Commerce OOP");
         int op = 1;
         int tentativa = 0;
+        Usuario usuario = null;
 
         while (op != -1) {
             
@@ -126,24 +196,29 @@ public class Main {
         System.out.println("Senha: ");
         String password = scanner.nextLine();
 
-        Usuario usuario = sistema.retornarUsuario(password, log, Logins);
+        usuario = sistema.retornarUsuario(password, log, Logins);
 
         if(usuario != null){
             System.out.println("Login Realizado com Sucesso !!\n");
             System.out.println("Bem vindo " + usuario.getNome() + "!!");
             System.out.println("Nivel de acesso: " + usuario.nomenclaturaAcesso(usuario.nivelDeAcesso));
+            
             op = -1;
         }
         else{
             tentativa++;
             System.out.println("Senha ou login incorreto !!");
             System.out.println("Tente novamente - Tentativa " + tentativa + "/3" );
+           
         }
     
       }
       
       int op2 = 1;
-      while(op2 != 0){
+      
+      if(usuario.nivelDeAcesso == 1 || usuario.nivelDeAcesso == 2){
+
+       while(op2 != 0){
        
         System.out.println("----------------------------");
         System.out.println("Menu");
@@ -168,6 +243,8 @@ public class Main {
         System.out.println("19 - Excluir Fornecedor");
         System.out.println("20 - Excluir Transportadora");
         System.out.println("21 - Excluir Usuario");
+        System.out.println("22 - Acrescentar Rota a Transportadora");
+        System.out.println("23 - Exibir Cargas");
         System.out.println("0 - encerrar programa");
         op2 = scanner.nextInt();
         scanner.nextLine();
@@ -203,13 +280,13 @@ public class Main {
                    sistema.alterarTransportadora(listaTranportadoras);
                    break;
             case 7:
-                   sistema.cadastrarProdutos(todosProdutos);
+                   sistema.cadastrarProdutos(todosProdutos, estoque);
                    break;
             case 8:
                    sistema.exibirProdutos(todosProdutos);
                    break;
             case 9:
-                   sistema.alterarProdutos(todosProdutos);
+                   sistema.alterarProdutos(todosProdutos, estoque);
                    break;
             case 10:
                    sistema.consultarIdProd(todosProdutos);
@@ -236,7 +313,7 @@ public class Main {
                      sistema.acrescentarProdutoAfornecedor(todosProdutos, listaFornecedores);
                      break;   
             case 18:
-                     sistema.excluiProduto(todosProdutos);
+                     sistema.excluiProduto(todosProdutos, estoque.getEstoqueLoja());
                      break;
             case 19:
                      sistema.excluiFornecedor(listaFornecedores);
@@ -246,7 +323,14 @@ public class Main {
                      break;
             case 21:
                       sistema.excluiUsuario(Logins);
-                      break;                                                                                                                                      
+                      break;           
+            case 22:
+                      sistema.acrescentarRota(Logins, listaTranportadoras);
+                      break;    
+            case 23:
+                      sistema.exibirCargas(listaTranportadoras);           
+                      break;   
+                     
             default:
                 break;
         }
@@ -254,9 +338,87 @@ public class Main {
 
       }
 
-      scanner.close();
-    }
+      
+     }
+     else if(usuario.nivelDeAcesso == 4){
 
+       while(op2 != 0){
+          
+         System.out.println("----------------------------");
+         System.out.println("1 - Consultar Produto por ID");    
+         System.out.println("2 - Consultar Produto por Nome");
+         System.out.println("3 - Adicionar Produto ao Carrinho");
+         System.out.println("4 - Exibir todos itens em estoque");
+         System.out.println("5 - Excluir produto do carrinho por posicao");
+         System.out.println("6 - Exibir historico de compras"); 
+         System.out.println("7 - Consultar Carrinho");
+         System.out.println("8 - Efetivar Compra");
+         System.out.println("0 - encerrar programa");
+         op2 = scanner.nextInt();
+         scanner.nextLine();
 
-   
+         switch(op2){
+              
+              case 1:
+                  sistema.buscaritemporIdCompras(estoque.getEstoqueLoja());
+                  break;
+              
+              case 2:
+                  sistema.buscarItemPorNome(estoque.getEstoqueLoja());
+                  break;
+              
+              case 3:
+                  sistema.addprodCarrinho(estoque,usuario);
+                  break;
+              
+              case 4:
+                  sistema.mostrarTodosOsitens(estoque);
+                  break;
+
+              case 5:
+                  sistema.excluirItemCarrinho(estoque, usuario);
+                  break;       
+              
+              case 6: 
+                   usuario.exibirHistorico();
+                   break; 
+
+              case 7:
+                   usuario.exibirCarrinho();      
+                   break;  
+              
+              case 8:
+                   sistema.efetivarCompra(usuario);
+                   break;       
+              
+              default:
+                  break;            
+         }
+       }
+     }
+
+     else if(usuario.nivelDeAcesso == 3){
+       while(op2 != 0){
+           System.out.println("----------------------------");
+           System.out.println("1 - Repor Mercadoria");
+           
+           op2 = scanner.nextInt();
+           scanner.nextLine();
+  
+           switch(op2){
+              case 1:
+                 sistema.reporMercadorias(estoque.getEstoqueLoja(), todosProdutos);    
+
+       }
+      }
+     }
+     scanner.close(); 
+     CarregarItens.salvar(estoque.getEstoqueLoja(), "estoque.dat");
+     CarregarItens.salvar(Logins, "logins.dat");
+     CarregarItens.salvar(listaTranportadoras, "transportadoras.dat");
+     CarregarItens.salvar(listaFornecedores, "fornecedores.dat");
+     CarregarItens.salvar(todosProdutos, "produtos.dat"); 
+    
+   }
+
 }
